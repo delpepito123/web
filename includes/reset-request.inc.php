@@ -2,10 +2,10 @@
 
 if(isset($_POST["reset-request-submit"])){
     
-    $selecteur = bin2hex(random_bytes(8));
+    $selector = bin2hex(random_bytes(8));
     $token = random_bytes(32); 
 
-    $url = "www.delpepitoshop.com/forgottenpwd/create-new-password.php?selector=".$selecteur."&validator=".bin2hex($token); // lien envoyé au mail
+    $url = "www.delpepitoshop.com/forgottenpwd/create-new-password.php?selector=".$selector."&validator=".bin2hex($token); // lien envoyé au mail
 
     $expirer = date("U") + 1800;
 
@@ -16,7 +16,7 @@ if(isset($_POST["reset-request-submit"])){
     $stmt = mysqli_stmt_init($connection);
     // si la connection échoue retourne une erreur pour pas crash le site
     if(!mysqli_stmt_prepare($stmt,$sql)){
-        echo "Il y a une erreur!";
+        echo "There's an error1 !";
         exit(); // break sors de la condition
     }
     else{ // si la connection réussie
@@ -24,11 +24,11 @@ if(isset($_POST["reset-request-submit"])){
         mysqli_stmt_execute($stmt);
     }
 
-    $sql = "INSERT INTO pwdReset (pwdResetEmail, pwdResetSelecteur,pwdResetToken,pwdResetExpires) VALUES (?,?,?,?);";
+    $sql = "INSERT INTO pwdReset (pwdResetEmail, pwdResetSelector,pwdResetToken,pwdResetExpires) VALUES (?,?,?,?);";
     $stmt = mysqli_stmt_init($connection);
     // si la connection échoue retourne une erreur pour pas crash le site
     if(!mysqli_stmt_prepare($stmt,$sql)){
-        echo "Il y a une erreur!";
+        echo "There's an error2 !";
         exit();                                        // break sors de la condition
     }
     else{    
@@ -37,14 +37,31 @@ if(isset($_POST["reset-request-submit"])){
         mysqli_stmt_execute($stmt);
     }
     mysqli_stmt_close($stmt);
-    mysqli_close();
+    mysqli_close($connection);
 
     // envoyer le mail
 
     $to = $userEmail;
 
-    $subject = "Reset le mot de passe pour delpepitoshop.com";
-    $message = "<p> Vous avez reçu un mail concernant le reset de votre mot de passe. Le lien pour reset votre mot de passe est en dessous. Si vous n'avez</p>";
+    $subject = "Reset your password for delpepitoshop";
+    $message = "<p>We recieved a password reset request.The link to reset your password is
+     below if you did not make this request, you can ignore this email</p>";
+    $message .= "<p>Here is your password reset link :  </br>";
+    $message .= '<a href= "' .$url.'">'.$url.'</a></p>';
+    
+    $headers = "From : delpepitoshop <usedelpepitoshop@gmail.com> \r\n"; // \r \n = new line in php
+    $headers .= "Reply-To : usedelpepitoshop@gmail.com \r\n";
+    $headers .= "Content-type: text/html \r\n";
+    
+    mail($to,$subject,$message,$headers);
+    header("Location: ../resetpassword.php?reset=success");
+
+
+
+
+
+
+
 
 
 }

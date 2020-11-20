@@ -14,7 +14,7 @@ require "header.php";
                     echo "Could not validate your request";
                 }
                 else{
-                    if(ctype_xdigit($selector) !== false && ctype_xdigit($validator) !== false){
+                    if(ctype_xdigit($selector) != false && ctype_xdigit($validator) != false){
                       ?>
 
                     <form action = "includes/reset-password.inc.php" method = "post">

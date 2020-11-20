@@ -10,5 +10,3 @@ $connection = mysqli_connect($servername,$dBUsername,$dBPassword,$dBName); // co
 if(!$connection){
     die("Connection failed : ".mysqli_connect_error()); // fonction die = exit
 }
-
-?>

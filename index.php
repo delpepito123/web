@@ -3,14 +3,12 @@
 ?>
 
     <main>
+    <link rel = "stylesheet" href ="css/style.css" type="text/css">
         <div class = "wrapper-main">
             <section class = "section-default">
                 <?php
                     if(isset($_SESSION['userId'])){
-                        echo '<p class = "login-status"> Vous êtes connecté !</p>';
-                    }
-                    else{
-                        echo '<p class = "login-status"> Vous êtes déconnecté !</p>';
+                        echo '<p class = "login-status1"> Vous êtes connecté !</p>';
                     }
                 ?>
                 

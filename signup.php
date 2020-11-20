@@ -32,29 +32,36 @@
 
                         }
 
+                    }
+
+                    else if(!empty($_GET['signup']) &&  $_GET['signup'] == "success"){ 
+                        echo '<p class="signup"> Connected</p>';
 
                     }
-                    else if($_GET['signup'] == "success"){
-                        echo '<p class="signup">Connecter</p>';
-
-                    }
-                
+                  
                 ?>
-                <form action = "includes/signup.inc.php" method = "post">
-
-                    <input type = "text" name = "uid" placeholder = "Username">
-                    <input type = "text" name = "mail" placeholder = "E-mail">
-                    <input type = "password" name = "pwd" placeholder = "Password">
-                    <input type = "password" name = "pwd-repeat" placeholder = "Repeat Password">
-                    <button type = "submit" name = "signup-submit"> Signup </button>
-
-                </form>
-
+                <div class = "jesus">
                 
-            </section>
-        </div> 
+                <form action = "includes/signup.inc.php" method = "post">
+                    <input class = "button" type = "text" name = "uid"  placeholder = "Username">
+                    <input class = "button" type = "text" name = "mail" placeholder = "E-mail">
+                    <input class = "button" type = "password" name = "pwd"  placeholder = "Password">
+                    <input class = "button" type = "password" name = "pwd-repeat" placeholder = "Repeat Password">
+                    <button class = "buttonlogin"  type = "submit" name = "signup-submit"> Signup </button>
+                </form>
+                <?php
+                    if(isset($_GET["newpwd"])){
+                        if($_GET["newpwd"] == "passwordupdated"){
+                            echo '<p class="signupsuccess"> Your password has been reset !</p>';
+                        }
+                    } 
+                ?>
+                <a href = "resetpassword.php">Forgot password ?</a> 
+        </section>
+
+
+                    
+
+                </div> 
     </main>
 
-<?php
-    require "footer.php";
-?>
